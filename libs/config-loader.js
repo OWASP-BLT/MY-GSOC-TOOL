@@ -126,3 +126,17 @@ export async function loadMilestones() {
         return [];
     }
 }
+
+// Load activity data
+export async function loadActivity() {
+    try {
+        const response = await fetch('data/activity.json');
+        if (!response.ok) {
+            throw new Error('Activity data not found');
+        }
+        return await response.json();
+    } catch (error) {
+        console.error('Error loading activity:', error);
+        return { interactions: [], lastUpdated: null };
+    }
+}

@@ -18,6 +18,7 @@ export function renderMentorInfo(config) {
             name: mentor.name,
             role: mentor.role,
             email: mentor.email,
+            githubHandle: mentor.githubHandle || '',
         })),
         feedback: config.feedback || []
     }
@@ -41,6 +42,7 @@ export function renderMentorInfo(config) {
                     <h3>${mentor.name}</h3>
                     <p>${mentor.role}</p>
                     ${mentor.email ? `<p><i class="fas fa-envelope"></i> ${mentor.email}</p>` : ''}
+                    ${mentor.githubHandle ? `<p><i class="fab fa-github"></i> @${mentor.githubHandle}</p>` : ''}
                 </div>
             </div>
         `).join('');
@@ -100,6 +102,15 @@ export function renderMentorInfo(config) {
                     data-mentor-index="${index}"
                     data-field="email"
                     placeholder="Mentor Email"
+                />
+
+                <input 
+                    type="text"
+                    class="input-field mt-2"
+                    value="${mentor.githubHandle || ''}"
+                    data-mentor-index="${index}"
+                    data-field="githubHandle"
+                    placeholder="Mentor GitHub Handle (e.g., username)"
                 />
             </form>
         </div>
