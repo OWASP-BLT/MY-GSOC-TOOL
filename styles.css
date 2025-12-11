@@ -684,8 +684,9 @@ body {
 }
 
 .activity-item:hover {
-    background: #f0f0f0;
+    background: var(--bg-color);
     transform: translateX(5px);
+    box-shadow: var(--shadow-hover);
 }
 
 .activity-icon {

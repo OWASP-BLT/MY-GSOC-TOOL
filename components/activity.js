@@ -27,11 +27,11 @@ export function renderActivity(activityData) {
     const getIconForType = (type) => {
         const icons = {
             'comment': 'fa-comment',
-            'review': 'fa-code-review',
+            'review': 'fa-eye',
             'issue_comment': 'fa-comment-dots',
-            'pr_review': 'fa-code-pull-request',
+            'pr_review': 'fa-code-branch',
             'pr_comment': 'fa-comments',
-            'commit_comment': 'fa-comment-code',
+            'commit_comment': 'fa-code',
             'mention': 'fa-at',
             'other': 'fa-bell'
         };
