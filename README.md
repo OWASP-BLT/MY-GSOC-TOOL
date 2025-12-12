@@ -9,6 +9,7 @@ A comprehensive, automated dashboard for Google Summer of Code students to showc
 ## ✨ Features
 
 - **📊 GitHub Contributions Tracking**: Automatically fetches and displays your commits, pull requests, issues, and code reviews using GitHub Actions
+- **🔔 GitHub Activity Tracking**: Automatically tracks comments, reviews, and interactions between you and your mentors on GitHub
 - **💬 Community Participation**: Link to your organization's community platform and showcase your participation in channels
 - **📝 Blog Posts Integration**: Display your progress blog posts and technical write-ups
 - **👨‍🏫 Mentor-Student Interactions**: Document feedback and interactions with your mentors
@@ -42,6 +43,7 @@ Edit `config.json` with your information:
     "bio": "Google Summer of Code Contributor",
     "avatar": "https://github.com/YOUR-USERNAME.png",
     "github": "https://github.com/YOUR-USERNAME",
+    "githubHandle": "YOUR-USERNAME",
     "email": "your.email@example.com",
     "blog": "https://yourblog.dev",
     "linkedin": "https://linkedin.com/in/YOUR-PROFILE"
@@ -56,15 +58,11 @@ Edit `config.json` with your information:
   "slack": {
     "workspaceUrl": "https://your-org.slack.com/join/shared_invite/xxx",
     "channels": ["general", "gsoc-2024", "your-project-channel"]
-  },
-  "mentor": {
-    "name": "Mentor Name",
-    "email": "mentor@example.com",
-    "avatar": "https://github.com/MENTOR-USERNAME.png",
-    "role": "Project Mentor"
   }
 }
 ```
+
+**Note:** Mentor information is now configured in `data/mentor.json` (see below).
 
 That's it! Your dashboard will be live at `https://YOUR-USERNAME.github.io/MY-GSOC-TOOL/`
 
@@ -141,19 +139,32 @@ Edit `data/weekly-updates.json`:
 ]
 ```
 
-### Adding Mentor Feedback
+### Configuring Mentors and Feedback
 
-Edit `data/feedback.json`:
+Edit `data/mentor.json`:
 
 ```json
-[
-  {
-    "from": "Mentor Name",
-    "content": "Feedback from your mentor",
-    "date": "2024-06-05"
-  }
-]
+{
+  "mentors": [
+    {
+      "avatar": "https://github.com/MENTOR-USERNAME.png",
+      "name": "Mentor Name",
+      "role": "Project Mentor",
+      "email": "mentor@example.com",
+      "githubHandle": "mentor-github-username"
+    }
+  ],
+  "feedback": [
+    {
+      "from": "Mentor Name",
+      "content": "Feedback from your mentor",
+      "date": "2024-06-05"
+    }
+  ]
+}
 ```
+
+**Important:** Add your mentor's GitHub handle to enable automatic tracking of their comments, reviews, and interactions with you on GitHub!
 
 ### Adding Milestones
 
