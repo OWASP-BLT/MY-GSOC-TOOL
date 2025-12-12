@@ -17,11 +17,13 @@ A simple guide to set up your personalized GSoC dashboard to showcase your journ
 ### Step 2: Enable GitHub Pages
 
 1. Go to your repository **Settings** → **Pages**
-2. Under **Source**, select **Deploy from a branch**
-3. Choose **main** branch and **/ (root)** folder
+2. Under **Source**, select **GitHub Actions** (recommended) or **Deploy from a branch**
+3. If using "Deploy from a branch", choose **main** branch and **/ (root)** folder
 4. Click **Save**
 
 Your dashboard will be at: `https://YOUR-USERNAME.github.io/MY-GSOC-TOOL/`
+
+> **💡 Tip:** A GitHub Action will automatically check if your GitHub Pages is configured correctly and create an issue if it detects any problems. Make sure to use **GitHub Actions** as the source for the best experience!
 
 ### Step 3: Add Your Information
 

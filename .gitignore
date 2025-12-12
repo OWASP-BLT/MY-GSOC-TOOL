@@ -15,6 +15,12 @@ tmp/
 temp/
 *.tmp
 scripts/
+!.github/scripts/
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
 
 # Build artifacts
 dist/

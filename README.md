@@ -174,7 +174,9 @@ Available icons: `check-circle`, `users`, `code-branch`, `star`, `trophy`, `awar
 
 ## 🤖 GitHub Actions Automation
 
-The dashboard includes a GitHub Actions workflow that:
+The dashboard includes several GitHub Actions workflows:
+
+### Dashboard Update Workflow
 
 1. **Automatically fetches your GitHub contributions** (commits, PRs, issues, reviews)
 2. **Updates the data** daily at midnight UTC
@@ -184,6 +186,17 @@ The workflow runs:
 - Daily at midnight UTC (scheduled)
 - When you push changes to `config.json` or `data/` files
 - Manually via the Actions tab
+
+### GitHub Pages Configuration Check
+
+A helpful workflow that automatically checks if you've properly configured GitHub Pages for your fork:
+
+- **Runs daily** at 6 AM UTC and on push to main branch
+- **Detects** if GitHub Pages is not configured or using the wrong URL
+- **Creates an issue** automatically to remind you to update your configuration
+- **Closes the issue** automatically once you've fixed the configuration
+
+This ensures your dashboard is accessible at your own GitHub Pages URL (e.g., `https://YOUR-USERNAME.github.io/MY-GSOC-TOOL/`) instead of the default URL.
 
 ### Manual Trigger
 
