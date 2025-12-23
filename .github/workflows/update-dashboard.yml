@@ -47,9 +47,15 @@ jobs:
           // Extract GitHub username from URL
           const githubUrl = config.student?.github || '';
           const username = githubUrl.split('/').pop() || 'example-user';
+          const studentHandle = config.student?.githubHandle || username;
           const repo = config.project?.repository ? config.project.repository.split('/').slice(-2).join('/') : '';
 
-          console.log(`Fetching data for user: ${username}`);
+          // Read mentor data
+          const mentorData = JSON.parse(fs.readFileSync('data/mentor.json', 'utf8'));
+          const mentorHandles = mentorData.mentors?.map(m => m.githubHandle).filter(h => h) || [];
+
+          console.log(`Fetching data for user: ${studentHandle}`);
+          console.log(`Tracking mentors: ${mentorHandles.join(', ')}`);
 
           // Function to make GitHub API request
           function makeRequest(path) {
@@ -152,9 +158,139 @@ jobs:
               fs.writeFileSync('data/github-contributions.json', JSON.stringify(output, null, 2));
               console.log('GitHub data updated successfully!');
               console.log('Stats:', stats);
+
+              // Fetch activity data (interactions with mentors)
+              await fetchActivityData();
             } catch (error) {
               console.error('Error fetching GitHub data:', error);
               // Keep existing data on error
+            }
+          }
+
+          // Fetch activity data - interactions with mentors
+          async function fetchActivityData() {
+            try {
+              if (!repo || mentorHandles.length === 0) {
+                console.log('No repository or mentor handles configured, skipping activity tracking');
+                return;
+              }
+
+              const interactions = [];
+              const [owner, repoName] = repo.replace('https://github.com/', '').split('/');
+
+              if (!owner || !repoName) {
+                console.log('Invalid repository format');
+                return;
+              }
+
+              console.log(`Fetching interactions from ${owner}/${repoName}...`);
+
+              // Fetch issue comments
+              const issueComments = await makeRequest(`/repos/${owner}/${repoName}/issues/comments?per_page=100&sort=created&direction=desc`);
+              
+              // Fetch pull request comments
+              const prComments = await makeRequest(`/repos/${owner}/${repoName}/pulls/comments?per_page=100&sort=created&direction=desc`);
+              
+              // Fetch commit comments
+              const commitComments = await makeRequest(`/repos/${owner}/${repoName}/comments?per_page=100`);
+
+              // Process issue comments
+              issueComments.forEach(comment => {
+                const authorHandle = comment.user?.login;
+                const isMentorComment = mentorHandles.includes(authorHandle);
+                const isStudentComment = authorHandle === studentHandle;
+                
+                // Track if it's a mentor commenting or student replying to mentor
+                if (isMentorComment || isStudentComment) {
+                  interactions.push({
+                    type: 'issue_comment',
+                    author: authorHandle,
+                    title: `Comment on issue`,
+                    body: comment.body,
+                    date: comment.created_at.split('T')[0],
+                    url: comment.html_url,
+                    isMentorInteraction: isMentorComment
+                  });
+                }
+              });
+
+              // Process PR comments
+              prComments.forEach(comment => {
+                const authorHandle = comment.user?.login;
+                const isMentorComment = mentorHandles.includes(authorHandle);
+                const isStudentComment = authorHandle === studentHandle;
+                
+                if (isMentorComment || isStudentComment) {
+                  interactions.push({
+                    type: 'pr_comment',
+                    author: authorHandle,
+                    title: `Comment on pull request`,
+                    body: comment.body,
+                    date: comment.created_at.split('T')[0],
+                    url: comment.html_url,
+                    isMentorInteraction: isMentorComment
+                  });
+                }
+              });
+
+              // Process commit comments
+              commitComments.forEach(comment => {
+                const authorHandle = comment.user?.login;
+                const isMentorComment = mentorHandles.includes(authorHandle);
+                const isStudentComment = authorHandle === studentHandle;
+                
+                if (isMentorComment || isStudentComment) {
+                  interactions.push({
+                    type: 'commit_comment',
+                    author: authorHandle,
+                    title: `Comment on commit`,
+                    body: comment.body,
+                    date: comment.created_at.split('T')[0],
+                    url: comment.html_url,
+                    isMentorInteraction: isMentorComment
+                  });
+                }
+              });
+
+              // Fetch PR reviews
+              const prs = await makeRequest(`/repos/${owner}/${repoName}/pulls?state=all&per_page=50`);
+              
+              for (const pr of prs.slice(0, 20)) {
+                const reviews = await makeRequest(`/repos/${owner}/${repoName}/pulls/${pr.number}/reviews`);
+                
+                reviews.forEach(review => {
+                  const reviewerHandle = review.user?.login;
+                  const isMentorReview = mentorHandles.includes(reviewerHandle);
+                  
+                  if (isMentorReview || reviewerHandle === studentHandle) {
+                    interactions.push({
+                      type: 'pr_review',
+                      author: reviewerHandle,
+                      title: `Reviewed PR #${pr.number}: ${pr.title}`,
+                      body: review.body || 'Review submitted',
+                      date: review.submitted_at.split('T')[0],
+                      url: review.html_url,
+                      isMentorInteraction: isMentorReview
+                    });
+                  }
+                });
+              }
+
+              // Sort by date (newest first)
+              interactions.sort((a, b) => new Date(b.date) - new Date(a.date));
+
+              // Limit to 50 most recent interactions
+              const limitedInteractions = interactions.slice(0, 50);
+
+              const activityOutput = {
+                interactions: limitedInteractions,
+                lastUpdated: new Date().toISOString()
+              };
+
+              fs.writeFileSync('data/activity.json', JSON.stringify(activityOutput, null, 2));
+              console.log(`Activity data updated! Found ${limitedInteractions.length} interactions`);
+            } catch (error) {
+              console.error('Error fetching activity data:', error);
             }
           }
 
@@ -168,11 +304,11 @@ jobs:
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add data/github-contributions.json
+          git add data/github-contributions.json data/activity.json
           if git diff --staged --quiet; then
             echo "No changes to commit"
           else
-            git commit -m "Update GitHub contributions data [skip ci]"
+            git commit -m "Update GitHub contributions and activity data [skip ci]"
             git push
           fi
 

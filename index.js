@@ -6,8 +6,9 @@ import { renderBlogPosts } from "./components/blogs.js";
 import { renderMentorInfo } from "./components/mentor.js";
 import { renderWeeklyUpdates } from "./components/updates.js";
 import { renderMilestones } from "./components/milestones.js";
+import { renderActivity } from "./components/activity.js";
 import { updateLastUpdated } from "./libs/utils.js";
-import { loadConfig, loadGitHubData, loadBlogPosts, loadMentorConfig, loadWeeklyUpdates, loadMilestones, loadProjectInfo, loadCommunityInfo } from "./libs/config-loader.js";
+import { loadConfig, loadGitHubData, loadBlogPosts, loadMentorConfig, loadWeeklyUpdates, loadMilestones, loadProjectInfo, loadCommunityInfo, loadActivity } from "./libs/config-loader.js";
 import { setGitHubToken, hasToken } from "./libs/api.js";
 
 // Initialize dashboard
@@ -21,6 +22,7 @@ async function initDashboard() {
     const milestones = await loadMilestones();
     const projectData = await loadProjectInfo()
     const communityInfo = await loadCommunityInfo()
+    const activityData = await loadActivity()
     // Render all sections
     renderHeader(config);
     renderProjectInfo(projectData);
@@ -28,6 +30,7 @@ async function initDashboard() {
     renderCommunityParticipation(communityInfo);
     renderBlogPosts(blogPosts, config);
     renderMentorInfo(mentorConfig);
+    renderActivity(activityData);
     renderWeeklyUpdates(weeklyUpdates);
     renderMilestones(milestones);
     updateLastUpdated();
