@@ -1,0 +1,61 @@
+name: Check GitHub Pages URL
+
+on:
+  schedule:
+    - cron: '0 6 * * *'
+  workflow_dispatch:
+  push:
+    branches: [main]
+
+permissions:
+  contents: read
+  issues: write
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check Pages URL
+        run: |
+          # Check if fork
+          REPO_INFO=$(curl -s -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" \
+            "https://api.github.com/repos/${{ github.repository }}")
+          IS_FORK=$(echo "$REPO_INFO" | jq -r '.fork')
+          
+          if [ "$IS_FORK" != "true" ]; then
+            echo "Not a fork, skipping check"
+            exit 0
+          fi
+          
+          # Check Pages URL
+          PAGES=$(curl -s -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" \
+            "https://api.github.com/repos/${{ github.repository }}/pages")
+          PAGES_URL=$(echo "$PAGES" | jq -r '.html_url // "none"')
+          
+          OWNER="${{ github.repository_owner }}"
+          REPO="${{ github.event.repository.name }}"
+          EXPECTED="https://${OWNER}.github.io/${REPO}/"
+          
+          # Check for issues
+          if [ "$PAGES_URL" = "none" ] || [ "$PAGES_URL" = "https://OWASP-BLT.github.io/MY-GSOC-TOOL/" ]; then
+            # Check if issue exists
+            ISSUES=$(curl -s -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" \
+              "https://api.github.com/repos/${{ github.repository }}/issues?state=open&labels=github-pages-setup")
+            
+            if [ "$(echo "$ISSUES" | jq '. | length')" = "0" ]; then
+              # Create issue
+              curl -X POST -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" \
+                "https://api.github.com/repos/${{ github.repository }}/issues" \
+                -d "{\"title\":\"⚠️ Configure GitHub Pages\",\"body\":\"Your GitHub Pages URL needs to be set up.\\n\\n**Go to Settings → Pages and select 'GitHub Actions' as the source.**\\n\\nYour dashboard will be at: \`${EXPECTED}\`\",\"labels\":[\"github-pages-setup\"]}"
+            fi
+          elif [ "$PAGES_URL" = "$EXPECTED" ]; then
+            # Close any open issues
+            ISSUES=$(curl -s -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" \
+              "https://api.github.com/repos/${{ github.repository }}/issues?state=open&labels=github-pages-setup")
+            
+            for issue in $(echo "$ISSUES" | jq -r '.[].number'); do
+              curl -X PATCH -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" \
+                "https://api.github.com/repos/${{ github.repository }}/issues/${issue}" \
+                -d '{"state":"closed"}'
+            done
+          fi
