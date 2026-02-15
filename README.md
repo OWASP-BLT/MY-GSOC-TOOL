@@ -275,8 +275,9 @@ The following users have forked this project:
 - [abdallahrali/MY-GSOC-TOOL](https://github.com/abdallahrali/MY-GSOC-TOOL) - ⭐ 0 stars
 - [karunarapolu/MY-GSOC-TOOL](https://github.com/karunarapolu/MY-GSOC-TOOL) - ⭐ 0 stars
 - [Nachiket-Roy/MY-GSOC-TOOL](https://github.com/Nachiket-Roy/MY-GSOC-TOOL) - ⭐ 0 stars
+- [Manahil-Afzal/MY-GSOC-TOOL](https://github.com/Manahil-Afzal/MY-GSOC-TOOL) - ⭐ 0 stars
 
-_Last updated: 2026-02-14 00:28:19 UTC_
+_Last updated: 2026-02-15 00:30:03 UTC_
 <!-- FORKS_END -->
 
 ---
