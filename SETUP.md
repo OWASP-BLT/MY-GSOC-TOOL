@@ -206,6 +206,19 @@ https://YOUR-USERNAME.github.io/MY-GSOC-TOOL/
 
 Give it a few minutes for the initial deployment to complete.
 
+### 7. Running Locally 
+You can also run the dashboard updates from your local machine:
+
+1.  **Install Node.js**: Download and install [Node.js](https://nodejs.org/); no other dependencies (like `npm install`) are required.
+2.  **Run the Script**:
+    ```bash
+    node scripts/fetch-github-data.js
+    ```
+    This fetches your latest data and updates `data/github-contributions.json`.
+3.  **Authentication**:
+    - By default, the script runs unauthenticated (limit: 60 requests/hour).
+    - To increase limits, create a `.env` file with your token: `GITHUB_TOKEN=your_token`.
+
 ## 🎨 Customization Tips
 
 ### Change Colors

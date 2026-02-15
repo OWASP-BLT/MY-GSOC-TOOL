@@ -1,22 +1,86 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>GSoC Student Dashboard</title>
-    <link rel="stylesheet" href="styles.css">
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#e74c3c',
+                        'primary-dark': '#c0392b',
+                        'primary-light': '#fadbd8',
+                        dark: {
+                            bg: '#1a1a1a',
+                            card: '#2d2d2d',
+                            text: '#e5e5e5',
+                            border: '#404040'
+                        }
+                    }
+                }
+            }
+        }
+    </script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* Custom scrollbar for feedback list */
+        .custom-scrollbar::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        .custom-scrollbar::-webkit-scrollbar-track {
+            background: #f1f1f1;
+        }
+
+        .dark .custom-scrollbar::-webkit-scrollbar-track {
+            background: #2d2d2d;
+        }
+
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+            background: #d1d5db;
+            border-radius: 3px;
+        }
+
+        .dark .custom-scrollbar::-webkit-scrollbar-thumb {
+            background: #6b7280;
+        }
+
+        .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+            background: #9ca3af;
+        }
+    </style>
 </head>
-<body>
-    <div class="container">
+
+<body
+    class="bg-gray-50 dark:bg-gray-900 min-h-screen text-gray-800 dark:text-gray-100 font-sans transition-colors duration-200">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         <!-- Header Section -->
-        <header class="dashboard-header">
-            <div class="header-content">
-                <img id="student-avatar" class="avatar" src="" alt="Student Avatar">
-                <div class="header-info">
-                    <h1 id="student-name">Loading...</h1>
-                    <p id="student-bio" class="bio">GSoC Contributor</p>
-                    <div class="social-links" id="social-links">
+        <header
+            class="bg-white dark:bg-gray-800 rounded-xl shadow-sm mb-8 overflow-hidden relative transition-colors duration-200">
+            <button id="theme-toggle"
+                class="absolute top-4 right-4 p-2 rounded-full bg-gray-100 dark:bg-gray-700 text-gray-600 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-600 transition-colors focus:outline-none"
+                aria-label="Toggle Dark Mode">
+                <i class="fas fa-moon dark:hidden"></i>
+                <i class="fas fa-sun hidden dark:inline"></i>
+            </button>
+            <div class="flex flex-col md:flex-row items-center p-8 gap-8">
+                <img id="student-avatar"
+                    class="w-32 h-32 rounded-full border-4 border-white dark:border-gray-700 shadow-lg object-cover bg-gray-200 dark:bg-gray-600 transition-colors duration-200"
+                    src="" alt="Student Avatar">
+                <div class="text-center md:text-left flex-1">
+                    <h1 id="student-name"
+                        class="text-3xl md:text-4xl font-bold text-gray-900 dark:text-white mb-2 transition-colors duration-200">
+                        Loading...</h1>
+                    <p id="student-bio"
+                        class="text-gray-500 dark:text-gray-400 text-lg mb-4 transition-colors duration-200">GSoC
+                        Contributor</p>
+                    <div class="flex flex-wrap gap-4 justify-center md:justify-start" id="social-links">
                         <!-- Dynamic social links -->
                     </div>
                 </div>
@@ -24,108 +88,188 @@
         </header>
 
         <!-- Project Info Section -->
-        <section class="card project-info">
-            <h2><i class="fas fa-project-diagram"></i> GSoC Project</h2>
+        <section class="bg-gradient-to-r from-primary to-primary-dark text-white rounded-xl shadow-lg p-8 mb-8">
+            <h2 id="section-title-project"
+                class="text-2xl font-bold mb-4 flex items-center border-b border-white/20 pb-2">
+                <i class="fas fa-project-diagram mr-2"></i> GSoC Project
+            </h2>
             <div id="project-details">
-                <h3 id="project-title">Loading...</h3>
-                <p id="project-description">Loading project details...</p>
-                <div class="project-meta">
-                    <span id="organization" class="meta-item"><i class="fas fa-building"></i> Organization: Loading...</span>
-                    <span id="timeline" class="meta-item"><i class="fas fa-calendar"></i> Timeline: Loading...</span>
+                <h3 id="project-title" class="text-xl font-semibold mb-2">Loading...</h3>
+                <p id="project-description" class="text-white/90 text-lg leading-relaxed">Loading project details...</p>
+                <div class="flex flex-wrap gap-6 mt-6 pt-6 border-t border-white/20">
+                    <span id="organization"
+                        class="flex items-center gap-2 bg-white/10 px-4 py-2 rounded-full text-sm backdrop-blur-sm">
+                        <i class="fas fa-building text-white/80"></i> Organization: Loading...
+                    </span>
+                    <span id="timeline"
+                        class="flex items-center gap-2 bg-white/10 px-4 py-2 rounded-full text-sm backdrop-blur-sm">
+                        <i class="fas fa-calendar text-white/80"></i> Timeline: Loading...
+                    </span>
                 </div>
             </div>
         </section>
 
         <!-- Main Content Grid -->
-        <div class="content-grid">
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-8">
             <!-- GitHub Contributions -->
-            <section class="card contributions">
-                <h2><i class="fab fa-github"></i> GitHub Contributions</h2>
-                <div id="github-stats" class="stats-container">
-                    <div class="stat-card">
-                        <div class="stat-value" id="total-commits">-</div>
-                        <div class="stat-label">Commits</div>
+            <section
+                class="bg-white dark:bg-gray-800 rounded-xl shadow-sm p-6 mb-8 col-span-1 lg:col-span-2 transition-colors duration-200">
+                <h2 id="section-title-github"
+                    class="text-xl font-bold text-gray-800 dark:text-gray-100 mb-6 flex items-center transition-colors duration-200">
+                    <i class="fab fa-github mr-2 text-gray-700 dark:text-gray-300"></i> GitHub Contributions
+                </h2>
+                <div id="github-stats" class="grid grid-cols-2 sm:grid-cols-4 gap-4 mb-6">
+                    <div
+                        class="bg-gray-50 dark:bg-gray-700 rounded-lg p-4 text-center border border-gray-100 dark:border-gray-600 transition-colors duration-200">
+                        <div class="text-3xl font-bold text-primary mb-1" id="total-commits">-</div>
+                        <div
+                            class="text-sm text-gray-500 dark:text-gray-400 uppercase tracking-wide stat-label transition-colors duration-200">
+                            Commits</div>
                     </div>
-                    <div class="stat-card">
-                        <div class="stat-value" id="total-prs">-</div>
-                        <div class="stat-label">Pull Requests</div>
+                    <div
+                        class="bg-gray-50 dark:bg-gray-700 rounded-lg p-4 text-center border border-gray-100 dark:border-gray-600 transition-colors duration-200">
+                        <div class="text-3xl font-bold text-primary mb-1" id="total-prs">-</div>
+                        <div
+                            class="text-sm text-gray-500 dark:text-gray-400 uppercase tracking-wide stat-label transition-colors duration-200">
+                            Pull Requests</div>
                     </div>
-                    <div class="stat-card">
-                        <div class="stat-value" id="total-issues">-</div>
-                        <div class="stat-label">Issues</div>
+                    <div
+                        class="bg-gray-50 dark:bg-gray-700 rounded-lg p-4 text-center border border-gray-100 dark:border-gray-600 transition-colors duration-200">
+                        <div class="text-3xl font-bold text-primary mb-1" id="total-issues">-</div>
+                        <div
+                            class="text-sm text-gray-500 dark:text-gray-400 uppercase tracking-wide stat-label transition-colors duration-200">
+                            Issues</div>
                     </div>
-                    <div class="stat-card">
-                        <div class="stat-value" id="total-reviews">-</div>
-                        <div class="stat-label">Reviews</div>
+                    <div
+                        class="bg-gray-50 dark:bg-gray-700 rounded-lg p-4 text-center border border-gray-100 dark:border-gray-600 transition-colors duration-200">
+                        <div class="text-3xl font-bold text-primary mb-1" id="total-reviews">-</div>
+                        <div
+                            class="text-sm text-gray-500 dark:text-gray-400 uppercase tracking-wide stat-label transition-colors duration-200">
+                            Reviews</div>
                     </div>
                 </div>
-                <div id="contribution-list" class="contribution-list">
+                <div id="contribution-list" class="space-y-4">
                     <!-- Dynamic contribution items -->
                 </div>
             </section>
 
             <!-- Slack Participation -->
-            <section class="card slack-section">
-                <h2><i class="fab fa-slack"></i> Community Participation</h2>
+            <section
+                class="bg-white dark:bg-gray-800 rounded-xl shadow-sm p-6 mb-8 lg:col-span-1 transition-colors duration-200">
+                <h2 id="section-title-slack"
+                    class="text-xl font-bold text-gray-800 dark:text-gray-100 mb-6 flex items-center transition-colors duration-200">
+                    <i class="fab fa-slack mr-2 text-primary"></i> Community Participation
+                </h2>
                 <div id="slack-info">
-                    <p class="slack-description">Active in organization communication channels</p>
-                    <div id="slack-channels" class="channel-list">
+                    <p class="text-gray-600 dark:text-gray-400 mb-4 slack-description transition-colors duration-200">
+                        Active in organization communication channels</p>
+                    <div id="slack-channels" class="space-y-2 mb-6">
                         <!-- Dynamic slack channel info -->
                     </div>
-                    <a id="slack-link" href="#" class="btn-primary" target="_blank" style="display: none;">
-                        <i class="fab fa-slack"></i> Join Slack Workspace
+                    <a id="slack-link" href="#"
+                        class="inline-flex items-center justify-center px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-primary hover:bg-primary-dark focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary w-full transition-colors hidden"
+                        target="_blank">
+                        <i class="fab fa-slack mr-2"></i> Join Slack Workspace
                     </a>
                 </div>
             </section>
 
-            <!-- Blog Posts & Progress -->
-            <section class="card blog-section">
-                <h2><i class="fas fa-blog"></i> Progress Blog</h2>
-                <div id="blog-posts" class="blog-list">
+            <!-- Progress Blog -->
+            <section
+                class="bg-white dark:bg-gray-800 rounded-xl shadow-sm p-6 mb-8 lg:col-span-1 transition-colors duration-200">
+                <h2 id="section-title-blog"
+                    class="text-xl font-bold text-gray-800 dark:text-gray-100 mb-6 flex items-center transition-colors duration-200">
+                    <i class="fas fa-blog mr-2 text-primary"></i> Progress Blog
+                </h2>
+                <div id="blog-posts" class="space-y-4 mb-6">
                     <!-- Dynamic blog posts -->
                 </div>
-                <a id="blog-link" href="#" class="btn-secondary" target="_blank" style="display: none;">
-                    <i class="fas fa-external-link-alt"></i> View Full Blog
+                <a id="blog-link" href="#"
+                    class="hidden inline-flex items-center justify-center px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm text-sm font-medium text-gray-700 dark:text-gray-300 bg-white dark:bg-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary w-full transition-colors duration-200"
+                    target="_blank">
+                    <i class="fas fa-external-link-alt mr-2"></i> View Full Blog
                 </a>
             </section>
 
             <!-- Mentor Interactions -->
-            <section class="card mentor-section">
-                <h2><i class="fas fa-user-tie"></i> Mentor Interactions</h2>
+            <section
+                class="bg-white dark:bg-gray-800 rounded-xl shadow-sm p-6 mb-8 lg:col-span-1 transition-colors duration-200">
+                <h2 id="section-title-mentors"
+                    class="text-xl font-bold text-gray-800 dark:text-gray-100 mb-6 flex items-center transition-colors duration-200">
+                    <i class="fas fa-user-tie mr-2 text-primary"></i> Mentor Interactions
+                </h2>
                 <div id="mentor-info">
-                    <div id="mentor-details" class="mentors-container">
+                    <div id="mentor-details" class="space-y-4 mb-6">
                         <!-- Dynamic mentor information (supports multiple mentors) -->
                     </div>
-                    <div id="feedback-list" class="feedback-list">
+                    <div id="feedback-list" class="space-y-4 max-h-96 overflow-y-auto pr-2 custom-scrollbar">
                         <!-- Dynamic feedback items -->
                     </div>
                 </div>
             </section>
 
             <!-- Weekly Updates -->
-            <section class="card updates-section">
-                <h2><i class="fas fa-calendar-week"></i> Weekly Updates</h2>
-                <div id="weekly-updates" class="timeline">
+            <section
+                class="bg-white dark:bg-gray-800 rounded-xl shadow-sm p-6 mb-8 lg:col-span-1 transition-colors duration-200">
+                <h2 id="section-title-updates"
+                    class="text-xl font-bold text-gray-800 dark:text-gray-100 mb-6 flex items-center transition-colors duration-200">
+                    <i class="fas fa-calendar-week mr-2 text-primary"></i> Weekly Updates
+                </h2>
+                <div id="weekly-updates" class="space-y-6">
                     <!-- Dynamic weekly updates -->
                 </div>
             </section>
 
             <!-- Milestones & Achievements -->
-            <section class="card milestones-section">
-                <h2><i class="fas fa-trophy"></i> Milestones & Achievements</h2>
-                <div id="milestones" class="milestone-list">
+            <section
+                class="bg-white dark:bg-gray-800 rounded-xl shadow-sm p-6 mb-8 lg:col-span-2 transition-colors duration-200">
+                <h2 id="section-title-milestones"
+                    class="text-xl font-bold text-gray-800 dark:text-gray-100 mb-6 flex items-center transition-colors duration-200">
+                    <i class="fas fa-trophy mr-2 text-yellow-500"></i> Milestones & Achievements
+                </h2>
+                <div id="milestones" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                     <!-- Dynamic milestones -->
                 </div>
             </section>
         </div>
 
         <!-- Footer -->
-        <footer class="dashboard-footer">
-            <p>GSoC Student Dashboard | Generated automatically via GitHub Actions</p>
-            <p>Last updated: <span id="last-updated">-</span></p>
+        <footer
+            class="text-center text-gray-500 dark:text-gray-400 text-sm mt-12 pb-8 border-t border-gray-200 dark:border-gray-700 pt-8 transition-colors duration-200">
+            <p id="footer-text">GSoC Student Dashboard | Generated automatically via GitHub Actions</p>
+            <p class="mt-2">Last updated: <span id="last-updated"
+                    class="font-medium text-gray-700 dark:text-gray-300">-</span></p>
         </footer>
     </div>
 
     <script src="dashboard.js"></script>
+
+    <!-- Blog Modal -->
+    <div id="blog-modal"
+        class="fixed inset-0 bg-black bg-opacity-50 hidden flex items-center justify-center p-4 z-50 transition-opacity duration-300 backdrop-blur-sm">
+        <div class="bg-white dark:bg-gray-800 rounded-xl shadow-2xl w-full max-w-2xl max-h-[80vh] flex flex-col transform transition-transform duration-300 scale-95 border border-gray-100 dark:border-gray-700"
+            id="blog-modal-panel">
+            <div
+                class="p-6 border-b border-gray-100 dark:border-gray-700 flex justify-between items-start transition-colors duration-200">
+                <div>
+                    <h2 id="blog-modal-title"
+                        class="text-2xl font-bold text-gray-800 dark:text-white mb-1 transition-colors duration-200">
+                        Blog Post Title</h2>
+                    <p id="blog-modal-date"
+                        class="text-sm text-gray-500 dark:text-gray-400 transition-colors duration-200"><i
+                            class="fas fa-calendar mr-1"></i> Date</p>
+                </div>
+                <button id="blog-modal-close"
+                    class="text-gray-400 dark:text-gray-500 hover:text-gray-600 dark:hover:text-gray-300 transition-colors">
+                    <i class="fas fa-times text-xl"></i>
+                </button>
+            </div>
+            <div id="blog-modal-content"
+                class="p-6 overflow-y-auto text-gray-700 dark:text-gray-300 leading-relaxed prose max-w-none dark:prose-invert transition-colors duration-200">
+                <!-- Blog content goes here -->
+            </div>
+        </div>
+    </div>
 </body>
+
 </html>

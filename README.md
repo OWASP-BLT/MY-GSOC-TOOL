@@ -75,6 +75,20 @@ Edit `config.json` with your information:
 }
 ```
 
+### Step 4: Token Setup (Optional but Recommended)
+
+To avoid GitHub API rate limits (especially for local development or frequent updates), set up a GitHub Token:
+
+1.  Copy `.env.example` to `.env`.
+2.  Add your [GitHub Personal Access Token](https://github.com/settings/tokens) to `.env`:
+    ```bash
+    GITHUB_TOKEN=your_token_here
+    ```
+3.  Run the fetch script manually to generate data:
+    ```bash
+    node scripts/fetch-github-data.js
+    ```
+
 That's it! Your dashboard will be live at `https://YOUR-USERNAME.github.io/MY-GSOC-TOOL/`
 
 ## 📖 Detailed Usage

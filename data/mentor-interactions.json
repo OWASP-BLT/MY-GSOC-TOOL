@@ -1,0 +1,42 @@
+{
+  "mentors": [
+    {
+      "name": "Mentor Name",
+      "role": "Lead Mentor",
+      "email": "mentor@example.com",
+      "github": "https://github.com/mentor",
+      "avatar": "https://github.com/mentor.png"
+    },
+    {
+      "name": "Co-Mentor Name",
+      "role": "Co-Mentor",
+      "email": "comentor@example.com",
+      "github": "https://github.com/comentor",
+      "avatar": "https://github.com/mentor.png"
+    },
+    {
+      "name": "Another Mentor",
+      "role": "Organization Admin",
+      "email": "admin@example.org",
+      "github": "https://github.com/orgadmin",
+      "avatar": "https://github.com/mentor.png"
+    }
+  ],
+  "interactions": [
+    {
+      "from": "Mentor Name",
+      "content": "Great work on the initial setup! Your code is clean and well-documented. Keep up the good work.",
+      "date": "2024-05-25"
+    },
+    {
+      "from": "Mentor Name",
+      "content": "Your pull request shows good understanding of the codebase. I've left some comments for improvement. Overall, excellent progress!",
+      "date": "2024-06-05"
+    },
+    {
+      "from": "Mentor Name",
+      "content": "Impressed with how you handled the code review feedback. Your iterative approach to development is commendable.",
+      "date": "2024-06-20"
+    }
+  ]
+}
