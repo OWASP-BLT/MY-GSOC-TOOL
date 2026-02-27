@@ -588,20 +588,38 @@ function renderWeeklyUpdates(updates) {
 function renderMilestones(milestones) {
     const milestoneList = document.getElementById('milestones');
     if (milestones && milestones.length > 0) {
-        milestoneList.innerHTML = milestones.map(milestone => `
-            <div class="flex gap-4 p-4 border border-gray-100 dark:border-gray-700 rounded-lg bg-gray-50 dark:bg-gray-700/50 items-start">
-                <div class="w-10 h-10 rounded-full bg-yellow-100 dark:bg-yellow-900/30 flex items-center justify-center text-yellow-600 dark:text-yellow-500 flex-shrink-0">
-                    <i class="fas fa-${milestone.icon || 'trophy'}"></i>
-                </div>
-                <div class="flex-1">
-                    <h4 class="font-semibold text-gray-800 dark:text-gray-200">${milestone.title}</h4>
-                    <p class="text-sm text-gray-600 dark:text-gray-400 mt-1 mb-2">${milestone.description}</p>
-                    <div class="text-xs text-gray-400 dark:text-gray-500 flex items-center">
-                        <i class="fas fa-calendar mr-1"></i> ${formatDate(milestone.date)}
+        milestoneList.innerHTML = milestones.map(milestone => {
+            const isCompleted = milestone.completed === true;
+            const cardClasses = isCompleted
+                ? 'flex gap-4 p-4 border border-green-200 dark:border-green-900/40 rounded-lg bg-green-50 dark:bg-green-900/10 items-start'
+                : 'flex gap-4 p-4 border border-gray-100 dark:border-gray-700 rounded-lg bg-gray-50 dark:bg-gray-700/50 items-start opacity-70';
+            const iconWrapperClasses = isCompleted
+                ? 'w-10 h-10 rounded-full bg-green-100 dark:bg-green-900/30 flex items-center justify-center text-green-600 dark:text-green-500 flex-shrink-0'
+                : 'w-10 h-10 rounded-full bg-gray-100 dark:bg-gray-700 flex items-center justify-center text-gray-400 dark:text-gray-500 flex-shrink-0';
+            const statusIcon = isCompleted
+                ? '<i class="fas fa-check-circle text-green-500 dark:text-green-400 flex-shrink-0 text-lg"></i>'
+                : '<i class="far fa-circle text-gray-300 dark:text-gray-600 flex-shrink-0 text-lg"></i>';
+            const titleClasses = isCompleted
+                ? 'font-semibold text-gray-800 dark:text-gray-200'
+                : 'font-semibold text-gray-500 dark:text-gray-400';
+            return `
+                <div class="${cardClasses}">
+                    <div class="${iconWrapperClasses}">
+                        <i class="fas fa-${milestone.icon || 'trophy'}"></i>
+                    </div>
+                    <div class="flex-1">
+                        <div class="flex items-center gap-2 mb-1">
+                            ${statusIcon}
+                            <h4 class="${titleClasses}">${milestone.title}</h4>
+                        </div>
+                        <p class="text-sm text-gray-600 dark:text-gray-400 mt-1 mb-2">${milestone.description}</p>
+                        <div class="text-xs text-gray-400 dark:text-gray-500 flex items-center">
+                            <i class="fas fa-calendar mr-1"></i> ${formatDate(milestone.date)}
+                        </div>
                     </div>
                 </div>
-            </div>
-        `).join('');
+            `;
+        }).join('');
     } else {
         milestoneList.innerHTML = '<p class="text-gray-500 italic">No milestones yet. Add your achievements to data/milestones.json</p>';
     }
