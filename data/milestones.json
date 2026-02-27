@@ -2,7 +2,7 @@
   {
     "title": "Project Proposal Accepted",
     "description": "Successfully submitted and got my GSoC project proposal accepted!",
-    "date": "2025-05-08",
+    "date": "2026-05-08",
     "icon": "check-circle",
     "completed": false,
     "_id": 1
@@ -10,7 +10,7 @@
   {
     "title": "Community Bonding Complete",
     "description": "Finished the community bonding period. Got familiar with the organization's workflow and met all the team members.",
-    "date": "2025-06-01",
+    "date": "2026-06-01",
     "icon": "users",
     "completed": false,
     "_id": 2
@@ -18,7 +18,7 @@
   {
     "title": "First Pull Request Merged",
     "description": "My first major contribution was merged into the main codebase after thorough review.",
-    "date": "2025-06-16",
+    "date": "2026-06-16",
     "icon": "code-branch",
     "completed": false,
     "_id": 3
@@ -26,7 +26,7 @@
   {
     "title": "Mid-Term Evaluation Passed",
     "description": "Successfully passed the mid-term evaluation with positive feedback from mentors.",
-    "date": "2025-07-18",
+    "date": "2026-07-18",
     "icon": "star",
     "completed": false,
     "_id": 4
@@ -34,7 +34,7 @@
   {
     "title": "Final Submission Complete",
     "description": "Completed all deliverables including implementation, test coverage, and documentation.",
-    "date": "2025-09-01",
+    "date": "2026-09-01",
     "icon": "trophy",
     "completed": false,
     "_id": 5

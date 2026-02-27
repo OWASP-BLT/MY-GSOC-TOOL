@@ -30,7 +30,7 @@ function getDefaultConfig() {
             title: "My GSoC Project",
             description: "Working on an amazing open-source project through Google Summer of Code",
             organization: "Open Source Organization",
-            timeline: "May 2024 - August 2024"
+            timeline: "May 2026 - September 2026"
         },
         slack: {
             workspaceUrl: "",

@@ -12,7 +12,7 @@
     "title": "Enhanced Security Testing Dashboard for BLT",
     "description": "Developing a comprehensive security testing dashboard that integrates vulnerability scanning, penetration testing results, and automated security reports. The project aims to make security testing more accessible and actionable for developers.",
     "organization": "OWASP Foundation",
-    "timeline": "May 27, 2024 - August 26, 2024",
+    "timeline": "May 27, 2026 - September 4, 2026",
     "repositories": [
       "https://github.com/OWASP-BLT/BLT",
       "https://github.com/OWASP-BLT/BLT-Flutter"
