@@ -1,12 +1,12 @@
 {
   "student": {
-    "name": "Your Name",
+    "name": "Ananya",
     "bio": "Google Summer of Code Contributor",
-    "avatar": "https://github.com/yourusername.png",
-    "github": "https://github.com/yourusername",
-    "email": "your.email@example.com",
-    "blog": "https://yourblog.dev",
-    "linkedin": "https://linkedin.com/in/yourprofile"
+    "avatar": "https://github.com/ananya-09.png",
+    "github": "https://github.com/ananya-09",
+    "email": "ananyar0912@gmail.com",
+    "blog": "https://dev.to/ananya-09",
+    "linkedin": "https://linkedin.com/in/ananya-mmmut"
   },
   "project": {
     "title": "Your GSoC Project Title",
@@ -14,16 +14,42 @@
     "organization": "Your Organization",
     "timeline": "May 2026 - September 2026",
     "repositories": [
-      "https://github.com/YourOrg/Repository-1",
-      "https://github.com/YourOrg/Repository-2"
+      "https://github.com/OWASP-BLT/BLT",
+      "https://github.com/OWASP-BLT/BLT-Ideas",
+      "https://github.com/OWASP-BLT/MY-GSOC-TOOL",
+      "https://github.com/OWASP-BLT/BLT-Next",
+      "https://github.com/OWASP-BLT/BLT-on-Cloudflare",
+      "https://github.com/OWASP-BLT/BLT-University",
+      "https://github.com/OWASP-BLT/.github",
+      "https://github.com/OWASP-BLT/BLT-GSOC",
+      "https://github.com/OWASP-BLT/owasp-blt.github.io",
+      "https://github.com/OWASP-BLT/BLT-API",
+      "https://github.com/OWASP-BLT/BLT-Design",
+      "https://github.com/OWASP-BLT/BLT-Newsletter",
+      "https://github.com/OWASP-BLT/BLT-SafeCloak",
+      "https://github.com/OWASP-BLT/BLT-Design-Contest",
+      "https://github.com/OWASP-BLT/BLT-GitHub-App",
+      "https://github.com/OWASP-BLT/BLT-Pages"
     ]
   },
   "slack": {
-    "workspaceUrl": "https://your-org.slack.com/join/shared_invite/xxx",
-    "channels": [
-      "general",
-      "gsoc-2024",
-      "your-project-channel"
-    ]
-  }
+    "workspaceUrl": "https://join.slack.com/t/owasp/shared_invite/zt-3r8n76i44-5sxdUp8UixsCs1Rm7KHRaw",
+    "channels": ["general", "gsoc-2026", "your-project-channel"]
+  },
+  "mentors": [
+    {
+      "name": "Mentor Name",
+      "email": "mentor@example.com",
+      "avatar": "https://github.com/MENTOR-USERNAME.png",
+      "role": "Lead Mentor",
+      "github": "https://github.com/MENTOR-USERNAME"
+    },
+    {
+      "name": "Co-Mentor Name",
+      "email": "co-mentor@example.com",
+      "avatar": "https://github.com/CO-MENTOR-USERNAME.png",
+      "role": "Co-Mentor",
+      "github": "https://github.com/CO-MENTOR-USERNAME"
+    }
+  ]
 }
